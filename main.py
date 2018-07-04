@@ -1,9 +1,9 @@
 import logging
 import telegram
 from telegram.ext import CommandHandler, MessageHandler, Filters, Updater
+from secrets import BOT_TOKEN
 
 
-TOKEN = '572110148:AAEpTBcIEaiOvllV0LobDBTctCUt1zzj6-c'
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
@@ -29,7 +29,7 @@ def echo(bot, update):
 
 
 
-updater = Updater(token=TOKEN)
+updater = Updater(token=BOT_TOKEN)
 dispatcher = updater.dispatcher
 
 start_handler = CommandHandler('start', start)
