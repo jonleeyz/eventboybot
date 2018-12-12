@@ -56,10 +56,5 @@ crashlytics-build.properties
 staticfiles
 .env
 
-venv/Scripts/
-venv/Lib/
-venv/Include
-venv/etc
-venv/share
-venv/pip-selfcheck.json
-venv/pyvenv.cfg
+# project virtual environment
+venv/
