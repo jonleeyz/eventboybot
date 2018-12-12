@@ -37,7 +37,12 @@ def find_other_intervals_which_overlap(tree, interval):
     result = tree.search(interval.begin, interval.end) # returns a set
     return result
 
+# Adds the overlap between two Intervals to the given IntervalTree
+# Input: Two Intervals and an IntervalTree
 # Output: None
+def add_overlap_to_overlap_tree(interval_a, interval_b, tree):
+    overlap_begin, overlap_end = find_overlap(interval_a.begin, interval_a.end, interval_b.begin, interval_b.end)
+    tree.addi(overlap_begin, overlap_end, (interval_a.data, interval_b.data))
 
 
 # Pre-condition: all arguments are integers, a and b are comparable
