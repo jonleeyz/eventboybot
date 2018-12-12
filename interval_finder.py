@@ -37,18 +37,7 @@ def find_other_intervals_which_overlap(tree, interval):
     result = tree.search(interval.begin, interval.end) # returns a set
     return result
 
-# Input: Two intervals and a dictionary (key: tuple)
 # Output: None
-def add_overlap_to_dict(interval_a, interval_b, dict):
-    overlap = find_overlap(interval_a.begin, interval_a.end, interval_b.begin, interval_b.end)
-    # if it is already recorded that other existing intervals already overlap over this exact period,
-    # add intervals a and b to the set of existing intervals
-    if overlap in dict:
-        existing_intervals_that_overlap = dict[overlap]
-        existing_intervals_that_overlap |= {interval_a.data, interval_b.data}
-        dict[overlap] = existing_intervals_that_overlap
-    else:
-        dict[overlap] = {interval_a.data, interval_b.data}
 
 
 # Pre-condition: all arguments are integers, a and b are comparable
