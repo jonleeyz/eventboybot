@@ -1,0 +1,5 @@
+certifi==2018.4.16
+future==0.16.0
+intervaltree==2.1.0
+python-telegram-bot==10.1.0
+sortedcontainers==2.0.4
