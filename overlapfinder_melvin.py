@@ -146,7 +146,7 @@ def find_overlap(a1, a2, b1, b2):
     return common_begin, common_end
 
 
-def print_common_dtintervals(overlap_dict):
+def print_common_dt_intervals(overlap_dict):
     print("available common datetime intervals:\n")
     # tup is the tuple representing the common interval, userid_set is set of the user data
     for overlap, userid_set in overlap_dict.items():
