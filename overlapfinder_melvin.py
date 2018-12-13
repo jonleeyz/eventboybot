@@ -103,10 +103,8 @@ def find_other_intervals_which_overlap(tree, interval):
 # Output: None
 # Pre-condition: interval.data is a user id
 def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
-    overlap = find_overlap(interval_a.begin, interval_a.end, interval_b.begin, interval_b.end) # returns a tuple
-    if overlap != None:
-        overlap = Interval(overlap[0], overlap[1])
-    else: 
+    overlap = find_overlap(interval_a, interval_b)
+    if overlap is None:
         return
 
     if overlap in overlap_dict:
@@ -120,11 +118,8 @@ def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
 # Output: None
 # Pre-condition: interval.data is a user id
 def add_overlap_to_dict(overlap, current_interval, overlap_dict):
-
-    common_tuple = find_overlap(overlap.begin, overlap.end, current_interval.begin, current_interval.end) # returns a tuple
-    if common_tuple != None:
-        common = Interval(common_tuple[0], common_tuple[1])
-    else: 
+    common = find_overlap(overlap, current_interval)
+    if common is None:
         return
     
     if common in overlap_dict:
