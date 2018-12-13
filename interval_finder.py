@@ -33,7 +33,7 @@ def find_all_common_intervals(interval_list):
 # Output: A set containing all other Intervals in the IntervalTree that intersect with the given Interval
 def find_other_intervals_which_overlap(tree, interval):
     tree.remove(interval)
-    result = tree.search(interval.begin, interval.end) # returns a set
+    result = tree[interval.begin:interval.end] # returns a set
     return result
 
 # Adds the overlap between two Intervals to the given IntervalTree
