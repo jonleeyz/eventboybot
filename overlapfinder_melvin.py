@@ -71,7 +71,6 @@ tc_9 = [
 ]        
 
 
-
 # Input: An list of Intervals
 # Output: A dictionary (key: overlap, value: set of user_ids which share the overlap)
 def find_all_common_intervals(interval_list):
@@ -80,14 +79,13 @@ def find_all_common_intervals(interval_list):
     
     for interval in interval_tree.items(): # create a copy of the tree to iterate over
         # check interval against overlap_dict
-        for overlap in overlap_dict.copy():
+        for overlap in overlap_dict.keys():
             add_overlap_to_dict(overlap, interval, overlap_dict)
             
         # check interval against other intervals in the tree to find overlapping regions
         other_intervals = find_other_intervals_which_overlap(interval_tree, interval)
         for other_interval in other_intervals:
-            add_new_overlap_to_dict(interval, other_interval, overlap_dict)
-               
+            add_new_overlap_to_dict(interval, other_interval, overlap_dict)         
          
     return overlap_dict
 
@@ -101,7 +99,7 @@ def find_other_intervals_which_overlap(tree, interval):
     return result
 
 
-# Input: Two intervals and a dictionary (key is Interval)
+# Input: Two Intervals and a dictionary (key is Interval)
 # Output: None
 # Pre-condition: interval.data is a user id
 def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
@@ -111,14 +109,14 @@ def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
     else: 
         return
 
-    if overlap in overlap_dict: # if overlap exists in overlap_dict
+    if overlap in overlap_dict:
         overlap_data = overlap_dict[overlap]
-        overlap_data |= {interval_a.data, interval_b.data} # update set of data
+        overlap_data |= {interval_a.data, interval_b.data}
     else:
-        overlap_dict[overlap] = {interval_a.data, interval_b.data} # create new dict entry
+        overlap_dict[overlap] = {interval_a.data, interval_b.data}
 
 
-# Input: Two intervals and a dictionary (key is Interval)
+# Input: Two Intervals and a dictionary (key is Interval)
 # Output: None
 # Pre-condition: interval.data is a user id
 def add_overlap_to_dict(overlap, current_interval, overlap_dict):
@@ -178,5 +176,3 @@ test_algo(tc_6)
 test_algo(tc_7)
 test_algo(tc_8)
 test_algo(tc_9)
-
-
