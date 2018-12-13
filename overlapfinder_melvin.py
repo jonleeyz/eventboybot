@@ -30,12 +30,12 @@ def find_all_common_intervals(interval_list):
         # check interval against overlap_dict
         for overlap in overlap_dict.copy():
             add_overlap_to_dict(overlap, interval, overlap_dict)
-            print("current " + str(overlap) + "\n" + interval.data + " old: " + str(overlap_dict) + "\n")
+            
         # check interval against other intervals in the tree to find overlapping regions
         other_intervals = find_other_intervals_which_overlap(interval_tree, interval)
         for other_interval in other_intervals:
             add_new_overlap_to_dict(interval, other_interval, overlap_dict)
-            print("current " + str(other_interval) + "\n" + interval.data + " new: " + str(overlap_dict) + "\n")    
+               
          
     return overlap_dict
 
@@ -48,26 +48,23 @@ def find_other_intervals_which_overlap(tree, interval):
     result = tree.search(interval.begin, interval.end) # returns a set
     return result
 
+
 # Input: Two intervals and a dictionary (key is Interval)
 # Output: None
 # Pre-condition: interval.data is a user id
 def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
-
     overlap = find_overlap(interval_a.begin, interval_a.end, interval_b.begin, interval_b.end) # returns a tuple
     if overlap != None:
         overlap = Interval(overlap[0], overlap[1])
     else: 
         return
-    
-    # print(overlap_dict)
-    # print(interval_a.data)
-    # print(interval_b.data)   
 
     if overlap in overlap_dict: # if overlap exists in overlap_dict
         overlap_data = overlap_dict[overlap]
         overlap_data |= {interval_a.data, interval_b.data} # update set of data
     else:
         overlap_dict[overlap] = {interval_a.data, interval_b.data} # create new dict entry
+
 
 # Input: Two intervals and a dictionary (key is Interval)
 # Output: None
@@ -79,14 +76,11 @@ def add_overlap_to_dict(overlap, current_interval, overlap_dict):
         common = Interval(common_tuple[0], common_tuple[1])
     else: 
         return
-    print("common: " + str(common))
     
     if common in overlap_dict:
         overlap_data = overlap_dict[overlap].copy()
         overlap_data |= {current_interval.data} # update set of data
         overlap_dict[common] = overlap_data # update key-value pair
-    # else:
-    #     overlap_dict[overlap] = {interval_b.data} # create new dict entry
 
 
 # Pre-condition: all arguments are integers, a and b are comparable
@@ -113,8 +107,24 @@ def print_common_dtintervals(overlap_dict):
 
 
 def test_algo():
+    overlap_dict = find_all_common_intervals(tc_1)
+    for items in overlap_dict.items():
+        print(items)
+    print()
+
+    overlap_dict = find_all_common_intervals(tc_2)
+    for items in overlap_dict.items():
+        print(items)
+    print()
+
+    overlap_dict = find_all_common_intervals(tc_3)
+    for items in overlap_dict.items():
+        print(items)
+    print()
+
     overlap_dict = find_all_common_intervals(tc_4)
     for items in overlap_dict.items():
         print(items)
+
 
 test_algo()
