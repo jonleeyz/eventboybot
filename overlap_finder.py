@@ -71,7 +71,7 @@ tc_9 = [
 ]        
 
 
-# Input: An list of Intervals
+# Input: A list of Intervals
 # Output: A dictionary (key: overlap, value: set of user_ids which share the overlap)
 def find_all_common_intervals(interval_list):
     overlap_dict = dict()
