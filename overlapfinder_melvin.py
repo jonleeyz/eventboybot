@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 from intervaltree import Interval, IntervalTree
+from warnings import warn
 
 # one interval
 tc_0 = [Interval(1, 3, "aaron")]
@@ -131,19 +132,26 @@ def add_overlap_to_dict(overlap, current_interval, overlap_dict):
         overlap_data |= {current_interval.data} # update set of data
         overlap_dict[common] = overlap_data # update key-value pair
 
-
-# Pre-condition: all arguments are integers, a and b are comparable
-def find_overlap(a1, a2, b1, b2):
-    a_begin = min(a1, a2)
-    a_end = max(a1, a2)
-    b_begin = min(b1, b2)
-    b_end = max(b1, b2)
+# Input: Two Intervals
+# Output: An Interval
+def find_overlap(interval_a, interval_b):
+    a_begin = interval_a.begin
+    a_end = interval_a.end
+    b_begin = interval_b.begin
+    b_end = interval_b.end
+    
+    if a_end < a_begin:
+        a_begin, a_end = a_end, a_begin
+        warn("interval_a: interval end is before begin")
+    if b_end < b_begin:
+        b_begin, b_end = b_end, b_begin
+        warn("interval_b: interval end is before begin")
 
     if b_end < a_begin or a_end < b_begin:
         return None
     common_begin = max(a_begin, b_begin)
     common_end = min(a_end, b_end)
-    return common_begin, common_end
+    return Interval(common_begin, common_end)
 
 
 def print_common_dt_intervals(overlap_dict):
