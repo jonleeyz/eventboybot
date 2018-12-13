@@ -25,10 +25,18 @@ tc_4 = [Interval(1, 3, "aaron"), Interval(2, 4, "ben"),
 def find_all_common_intervals(interval_list):
     overlap_dict = dict()
     interval_tree = IntervalTree(interval_list)
+    
     for interval in interval_tree.items(): # create a copy of the tree to iterate over
-        other_intervals_that_overlap = find_other_intervals_which_overlap(interval_tree, interval)
-        for other_interval in other_intervals_that_overlap:
-            add_overlap_to_dict(interval, other_interval, overlap_dict)
+        # check interval against overlap_dict
+        for overlap in overlap_dict.copy():
+            add_overlap_to_dict(overlap, interval, overlap_dict)
+            print("current " + str(overlap) + "\n" + interval.data + " old: " + str(overlap_dict) + "\n")
+        # check interval against other intervals in the tree to find overlapping regions
+        other_intervals = find_other_intervals_which_overlap(interval_tree, interval)
+        for other_interval in other_intervals:
+            add_new_overlap_to_dict(interval, other_interval, overlap_dict)
+            print("current " + str(other_interval) + "\n" + interval.data + " new: " + str(overlap_dict) + "\n")    
+         
     return overlap_dict
 
 
@@ -40,18 +48,45 @@ def find_other_intervals_which_overlap(tree, interval):
     result = tree.search(interval.begin, interval.end) # returns a set
     return result
 
-# Input: Two intervals and a dictionary (key: tuple)
+# Input: Two intervals and a dictionary (key is Interval)
 # Output: None
-def add_overlap_to_dict(interval_a, interval_b, dict):
-    overlap = find_overlap(interval_a.begin, interval_a.end, interval_b.begin, interval_b.end)
-    # if it is already recorded that other existing intervals already overlap over this exact
-    # period, add intervals a and b to the set of existing intervals
-    if overlap in dict:
-        existing_intervals_that_overlap = dict[overlap]
-        existing_intervals_that_overlap |= {interval_a.data, interval_b.data}
-        dict[overlap] = existing_intervals_that_overlap
+# Pre-condition: interval.data is a user id
+def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
+
+    overlap = find_overlap(interval_a.begin, interval_a.end, interval_b.begin, interval_b.end) # returns a tuple
+    if overlap != None:
+        overlap = Interval(overlap[0], overlap[1])
+    else: 
+        return
+    
+    # print(overlap_dict)
+    # print(interval_a.data)
+    # print(interval_b.data)   
+
+    if overlap in overlap_dict: # if overlap exists in overlap_dict
+        overlap_data = overlap_dict[overlap]
+        overlap_data |= {interval_a.data, interval_b.data} # update set of data
     else:
-        dict[overlap] = {interval_a.data, interval_b.data}
+        overlap_dict[overlap] = {interval_a.data, interval_b.data} # create new dict entry
+
+# Input: Two intervals and a dictionary (key is Interval)
+# Output: None
+# Pre-condition: interval.data is a user id
+def add_overlap_to_dict(overlap, current_interval, overlap_dict):
+
+    common_tuple = find_overlap(overlap.begin, overlap.end, current_interval.begin, current_interval.end) # returns a tuple
+    if common_tuple != None:
+        common = Interval(common_tuple[0], common_tuple[1])
+    else: 
+        return
+    print("common: " + str(common))
+    
+    if common in overlap_dict:
+        overlap_data = overlap_dict[overlap].copy()
+        overlap_data |= {current_interval.data} # update set of data
+        overlap_dict[common] = overlap_data # update key-value pair
+    # else:
+    #     overlap_dict[overlap] = {interval_b.data} # create new dict entry
 
 
 # Pre-condition: all arguments are integers, a and b are comparable
@@ -68,10 +103,18 @@ def find_overlap(a1, a2, b1, b2):
     return common_begin, common_end
 
 
-def print_common_intervals(tup_set_dict):
+def print_common_dtintervals(overlap_dict):
     print("available common datetime intervals:\n")
     # tup is the tuple representing the common interval, userid_set is set of the user data
-    for tup, userid_set in tup_set_dict.items():
-        print(tup[0].strftime('%Y-%b-%d %H%M') + " - " + tup[1].strftime('%Y-%b-%d %H%M') + ": ")
+    for overlap, userid_set in overlap_dict.items():
+        print(overlap.begin.strftime('%Y-%b-%d %H%M') + " - " + overlap.end.strftime('%Y-%b-%d %H%M') + ": ")
         print("\tuserids: " + str(userid_set))
     print()
+
+
+def test_algo():
+    overlap_dict = find_all_common_intervals(tc_4)
+    for items in overlap_dict.items():
+        print(items)
+
+test_algo()
