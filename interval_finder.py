@@ -23,11 +23,15 @@ tc_4 = [Interval(1, 3, "aaron"), Interval(2, 4, "ben"), Interval(3, 5, "charlott
 def find_all_common_intervals(interval_list):
     overlap_tree = IntervalTree()
     interval_tree = IntervalTree(interval_list)
-    for interval in interval_tree.items(): # create a copy of the tree to iterate over
+    for interval in interval_tree.items():
         other_intervals = find_other_intervals_which_overlap(interval_tree, interval)
         for other_interval in other_intervals:
             add_overlap_to_overlap_tree(interval, other_interval, overlap_tree)
-
+    print(overlap_tree)
+    for overlap in overlap_tree.items():
+        overlap_tree.remove(overlap)
+        print(overlap_tree.search(overlap))
+    
 
 # Input: An IntervalTree and an Interval in the IntervalTree
 # Output: A set containing all other Intervals in the IntervalTree that intersect with the given Interval
