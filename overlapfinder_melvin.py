@@ -18,6 +18,58 @@ tc_3 = [Interval(1, 3, "aaron"), Interval(2, 4, "ben"), Interval(2, 5, "charlott
 tc_4 = [Interval(1, 3, "aaron"), Interval(2, 4, "ben"),
         Interval(3, 5, "charlotte"), Interval(1, 6, "dan")]
 
+# more test cases
+#----------------
+
+# input: no overlap
+# expected: no common interval
+tc_5 = [
+    Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=2, hour=0), "user_1"),
+    Interval(dt(year=2018, month=1, day=2, hour=0), dt(year=2018, month=1, day=3, hour=0), "user_2"),
+    Interval(dt(year=2018, month=1, day=3, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_3")
+]
+
+# input: two overlap
+# expected: common interval at 2018,1,2,0 - 2018,1,3,0, for all users
+# common interval at 2018,1,2,0 - 2018,1,4,0, for user_1 and user_3.
+tc_6 = [
+    Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_1"),
+    Interval(dt(year=2018, month=1, day=2, hour=0), dt(year=2018, month=1, day=3, hour=0), "user_2"),
+    Interval(dt(year=2018, month=1, day=2, hour=0), dt(year=2018, month=1, day=5, hour=0), "user_3")
+]
+
+# input: complete overlap
+# expected: one common interval at 2018,1,1,0 - 2018,1,4,0, for all users
+tc_7 = [
+    Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_1"),
+    Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_2"),
+    Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_3")
+]
+
+# input: user 1 has 2 different intervals
+# expected: two common intervals at [2018,1,1,0 - 2018,1,2,0] and [2018,1,4,0 - 2018,1,5,0] 
+tc_8 = [
+    Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=2, hour=0), "user_1"),
+    Interval(dt(year=2018, month=1, day=4, hour=0), dt(year=2018, month=1, day=5, hour=0), "user_1"),
+    Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=8, hour=0), "user_2"),
+]
+
+# input: many users with many intervals each
+# expected: many common intervals 
+tc_9 = [
+    Interval(dt(year=2018, month=1, day=1, hour=10), dt(year=2018, month=1, day=1, hour=12), "user_1"),
+    Interval(dt(year=2018, month=1, day=3, hour=10), dt(year=2018, month=1, day=3, hour=12), "user_1"),
+    Interval(dt(year=2018, month=1, day=1, hour=11), dt(year=2018, month=1, day=1, hour=13), "user_2"),
+    Interval(dt(year=2018, month=1, day=3, hour=11), dt(year=2018, month=1, day=3, hour=13), "user_2"),
+    Interval(dt(year=2018, month=1, day=1, hour=8), dt(year=2018, month=1, day=1, hour=18), "user_3"),
+    Interval(dt(year=2018, month=1, day=2, hour=8), dt(year=2018, month=1, day=2, hour=18), "user_3"),
+    Interval(dt(year=2019, month=1, day=1, hour=8), dt(year=2019, month=1, day=1, hour=18), "user_4"),
+    Interval(dt(year=2019, month=1, day=5, hour=0), dt(year=2019, month=1, day=6, hour=0), "user_4"),
+    Interval(dt(year=2019, month=1, day=5, hour=0), dt(year=2019, month=1, day=6, hour=0), "user_5"),
+    Interval(dt(year=2019, month=1, day=5, hour=0), dt(year=2019, month=1, day=6, hour=0), "user_5"),
+    Interval(dt(year=2019, month=1, day=5, hour=0), dt(year=2019, month=1, day=6, hour=0), "user_6")
+]        
+
 
 
 # Input: An list of Intervals
@@ -106,25 +158,25 @@ def print_common_dtintervals(overlap_dict):
     print()
 
 
-def test_algo():
-    overlap_dict = find_all_common_intervals(tc_1)
+tc_counter = 1
+
+def test_algo(tc):
+    global tc_counter
+    print(tc_counter)
+    tc_counter = tc_counter + 1
+    overlap_dict = find_all_common_intervals(tc)
     for items in overlap_dict.items():
         print(items)
     print()
 
-    overlap_dict = find_all_common_intervals(tc_2)
-    for items in overlap_dict.items():
-        print(items)
-    print()
-
-    overlap_dict = find_all_common_intervals(tc_3)
-    for items in overlap_dict.items():
-        print(items)
-    print()
-
-    overlap_dict = find_all_common_intervals(tc_4)
-    for items in overlap_dict.items():
-        print(items)
+test_algo(tc_1)
+test_algo(tc_2)
+test_algo(tc_3)
+test_algo(tc_4)
+test_algo(tc_5)
+test_algo(tc_6)
+test_algo(tc_7)
+test_algo(tc_8)
+test_algo(tc_9)
 
 
-test_algo()
