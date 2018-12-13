@@ -1,6 +1,5 @@
 from datetime import datetime as dt
 from intervaltree import Interval, IntervalTree
-#import test_inputs
 
 # one interval
 tc_0 = [Interval(1, 3, "aaron")]
@@ -9,7 +8,7 @@ tc_0 = [Interval(1, 3, "aaron")]
 tc_1 = [Interval(1, 2, "aaron"), Interval(3, 4, "ben"), Interval(5, 6, "charlotte")]
 
 # separate overlaps
-tc_2 = [Interval(1, 3, "aaron"), Interval(2, 4, "ben"),  Interval(3, 5, "charlotte")]
+tc_2 = [Interval(1, 3, "aaron"), Interval(2, 4, "ben"), Interval(3, 5, "charlotte")]
 
 # shared overlap
 tc_3 = [Interval(1, 3, "aaron"), Interval(2, 4, "ben"), Interval(2, 5, "charlotte")]
@@ -166,6 +165,7 @@ def test_algo(tc):
     for items in overlap_dict.items():
         print(items)
     print()
+
 
 test_algo(tc_1)
 test_algo(tc_2)
