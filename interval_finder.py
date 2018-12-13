@@ -53,9 +53,9 @@ def find_overlap(a1, a2, b1, b2):
 
     if b_end < a_begin or a_end < b_begin:
         return None
-    common_begin = max(a_begin, b_begin)
-    common_end = min(a_end, b_end)
-    return common_begin, common_end
+    overlap_begin = max(a_begin, b_begin)
+    overlap_end = min(a_end, b_end)
+    return overlap_begin, overlap_end
 
 
 def print_common_intervals(tup_set_dict):
