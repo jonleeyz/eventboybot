@@ -29,8 +29,8 @@ tc_5 = [
 ]
 
 # input: two overlap
-# expected: common interval at 2018,1,2,0 - 2018,1,3,0, for all users
-# common interval at 2018,1,2,0 - 2018,1,4,0, for user_1 and user_3.
+# expected: common interval at 2018, 1, 2, 0 - 2018, 1, 3, 0, for all users
+# common interval at 2018, 1, 2, 0 - 2018, 1, 4, 0, for user_1 and user_3.
 tc_6 = [
     Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_1"),
     Interval(dt(year=2018, month=1, day=2, hour=0), dt(year=2018, month=1, day=3, hour=0), "user_2"),
@@ -38,7 +38,7 @@ tc_6 = [
 ]
 
 # input: complete overlap
-# expected: one common interval at 2018,1,1,0 - 2018,1,4,0, for all users
+# expected: one common interval at 2018, 1, 1, 0 - 2018, 1, 4, 0, for all users
 tc_7 = [
     Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_1"),
     Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=4, hour=0), "user_2"),
@@ -46,7 +46,7 @@ tc_7 = [
 ]
 
 # input: user 1 has 2 different intervals
-# expected: two common intervals at [2018,1,1,0 - 2018,1,2,0] and [2018,1,4,0 - 2018,1,5,0] 
+# expected: two common intervals at [2018, 1, 1, 0 - 2018, 1, 2, 0] and [2018, 1, 4, 0 - 2018, 1, 5, 0] 
 tc_8 = [
     Interval(dt(year=2018, month=1, day=1, hour=0), dt(year=2018, month=1, day=2, hour=0), "user_1"),
     Interval(dt(year=2018, month=1, day=4, hour=0), dt(year=2018, month=1, day=5, hour=0), "user_1"),
@@ -98,7 +98,7 @@ def find_other_intervals_which_overlap(tree, interval):
     return result
 
 
-# Input: Two Intervals and a dictionary (key is Interval)
+# Input: Two Intervals and a dictionary (key: Interval; value: set of userids)
 # Output: None
 # Pre-condition: interval.data is a user id
 def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
@@ -115,7 +115,7 @@ def add_new_overlap_to_dict(interval_a, interval_b, overlap_dict):
         overlap_dict[overlap] = {interval_a.data, interval_b.data}
 
 
-# Input: Two Intervals and a dictionary (key is Interval)
+# Input: Two Intervals and a dictionary (key: Interval; value: set of userids)
 # Output: None
 # Pre-condition: interval.data is a user id
 def add_overlap_to_dict(overlap, current_interval, overlap_dict):
