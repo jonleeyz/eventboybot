@@ -9,3 +9,47 @@ DROP TABLE IF EXISTS Participates_in;
 DROP TABLE IF EXISTS Polls;
 DROP TABLE IF EXISTS Present_in;
 DROP TABLE IF EXISTS Users;
+
+CREATE TABLE Chats (
+
+);
+
+CREATE TABLE Contains_I (
+
+);
+
+CREATE TABLE Contains_O (
+
+);
+
+CREATE TABLE Has_I (
+
+);
+
+CREATE TABLE Has_O (
+
+);
+
+CREATE TABLE Intervals (
+
+);
+
+CREATE TABLE Overlaps (
+
+);
+
+CREATE TABLE Participates_in (
+
+);
+
+CREATE TABLE Polls (
+
+);
+
+CREATE TABLE Present_in (
+
+);
+
+CREATE TABLE Users (
+
+);
